@@ -1,0 +1,11 @@
+{
+  "name": "zeal-optics-new-event",
+  "version": "1.0.0",
+  "description": "A front-end to create a new event for display on the zealoptics.com/events page",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Alex Goodwin",
+  "license": "ISC"
+}
