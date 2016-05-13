@@ -89,7 +89,7 @@
 
                             <div class="col-md-3">
                                 <div class="input-group time">
-                                    <input type="text" class="form-control" name="timeStart"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    <input type="text" class="form-control" name="timeStart" placeholder="3pm"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -111,7 +111,7 @@
 
                             <div class="col-md-3">
                                 <div class="input-group time">
-                                    <input type="text" class="form-control" name="timeEnd"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                    <input type="text" class="form-control" name="timeEnd" placeholder="3pm"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
                                 </div>
                             </div>
                         </div>
@@ -132,7 +132,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="blogPostUrl">Blog Post URL</label>
                             <div class="col-md-4">
-                                <input id="blogPostUrl" name="blogPostUrl" type="text" placeholder="http://blog.zealoptics.com/post/144200845501/zeal-launches-wilderness-wednesdays-here-in" class="form-control input-md" required="">
+                                <input id="blogPostUrl" name="blogPostUrl" type="text" placeholder="http://blog.zealoptics.com/post/144200845501/zeal-launches-wilderness-wednesdays-here-in" class="form-control input-md">
                                 <span class="help-block">You may leave this blank if no blog post exists.</span>
                             </div>
                         </div>
@@ -141,7 +141,7 @@
                         <div class="form-group">
                             <label class="col-md-4 control-label" for="externalUrl">External URL</label>
                             <div class="col-md-4">
-                                <input id="eventName" name="externalUrl" type="text" externalUrl="http://dewtour.com" class="form-control input-md" required="">
+                                <input id="eventName" name="externalUrl" type="text" placeholder="http://dewtour.com" class="form-control input-md">
                                 <span class="help-block"></span>
                             </div>
                         </div>
@@ -184,7 +184,7 @@
         window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
 
         $('.input-group.date').datepicker({});
-        $('.input-group.time').timepicker({});
+//        $('.input-group.time').timepicker({});
 
     </script>
 
