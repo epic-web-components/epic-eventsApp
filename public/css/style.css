@@ -1,0 +1,22 @@
+/* line 1, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+.jumbotron {
+  background: url("../img/events-hero.jpg") center center no-repeat;
+  background-size: cover;
+  position: relative;
+  color: white; }
+
+/* line 8, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+.dark-bg {
+  background: rgba(0, 0, 0, 0.5); }
+
+/* line 13, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+.upcomingEventsHeader h1, .upcomingEventsHeader h2 {
+  margin: 0;
+  padding: 6px 0; }
+
+/* line 20, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+.event h3 {
+  margin: 0;
+  padding: 6px 0; }
+
+/*# sourceMappingURL=style.css.map */

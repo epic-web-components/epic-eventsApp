@@ -1,0 +1,223 @@
+<div class="jumbotron">
+    <div class="container">
+        <h1>Hello, events team!</h1>
+        <div class="row dark-bg">
+            <div class="col-md-6">
+                <h4>What/why?</h4>
+                <p>Below are the current/upcoming events on the <a href="//www.zealoptics.com/events" target="_blank">ZealOptics.com/Events</a> page.</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Questions?</h4>
+                <p>Email Alex (agoodwin@zealoptics.com) or Max (mleitch@zealoptics.com).</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row upcomingEventsHeader">
+        <div class="col-xs-10">
+            <h2>Upcoming Events</h2>
+        </div>
+        
+        <div class="col-xs-2">
+            <a href="/new" class="btn btn-primary pull-right">
+                <span class="glyphicon glyphicon-plus"></span> New Event
+            </a>
+        </div>
+    </div>
+
+    <div class="row well event bg-success">
+        <div class="col-xs-8">
+            <h3>{{newEventTitle}}</h3>
+            <h4>{{newEventSummary}}</h4>
+            <p>Location: {{newEventLocation}}</p>
+            <p>Dates: {{newEventDateStart}} - {{newEventDateEnd}}</p>
+            <p>Time: {{newEventTimeStart}} - {{newEventTimeEnd}}</p>
+            <p>Blog Post: {{newEventBlogPostUrl}}</p>
+            <p>Website: {{newEventExternalUrl}}</p>
+            <p>Description: {{newEventDescription}}</p>
+            <img src="{{newEventImgUrl}}">
+        </div>
+        <div class="col-xs-4 text-right">
+            <a href="#" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+            </a>
+            <a href="#" type="button" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+            </a>
+        </div>
+    </div>
+    
+    <div class="row well event">
+        <div class="col-xs-8">
+            <h3>Event Title</h3>
+        </div>
+        <div class="col-xs-4 text-right">
+            <a href="#" type="button" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+            </a>
+            <a href="#" type="button" class="btn btn-danger">
+                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+            </a>
+        </div>
+    </div>
+
+    <hr>
+
+    <h1>Past Events</h1>
+
+    <div class="row well event">
+        <div class="col-sm-10">
+            <h3 class="text-muted">Event Title</h3>
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>&copy; Zeal Optics 2016</p>
+    </footer>
+</div>
+<!-- /container -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+
+<!-- file upload stuff -->
+<script src="js/vendor/jquery.ui.widget.js"></script>
+<script src="js/load-image.all.min.js"></script>
+<script src="js/canvas-to-blob.min.js"></script>
+<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+<script src="js/jquery.iframe-transport.js"></script>
+<!-- The basic File Upload plugin -->
+<script src="js/jquery.fileupload.js"></script>
+<!-- The File Upload processing plugin -->
+<script src="js/jquery.fileupload-process.js"></script>
+<!-- The File Upload image preview & resize plugin -->
+<script src="js/jquery.fileupload-image.js"></script>
+<!-- The File Upload validation plugin -->
+<script src="js/jquery.fileupload-validate.js"></script>
+
+<!-- google cloud api -->
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+<!-- general -->
+<script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+
+    $('.input-group.date').datepicker({});
+
+
+    $('#newEventForm').on('submit', function(e) {
+        //            e.preventDefault();
+
+        console.log($(this).serialize());
+    });
+
+    //        gapi.client.setApiKey(YOUR API KEY);
+
+    // file upload
+    $(function() {
+        'use strict';
+
+        var projectId = '451604441788',
+            bucket = 'mauijim-1289.appspot.com/event-images',
+            url = 'https://www.googleapis.com/upload/storage/v1/b/myBucket/o',
+            uploadButton = $('<button/>')
+            .addClass('btn btn-primary')
+            .prop('disabled', true)
+            .text('Processing...')
+            .on('click', function() {
+                var $this = $(this),
+                    data = $this.data();
+                $this
+                    .off('click')
+                    .text('Abort')
+                    .on('click', function() {
+                        $this.remove();
+                        data.abort();
+                    });
+                data.submit().always(function() {
+                    $this.remove();
+                });
+            });
+        $('#fileupload').fileupload({
+                url: url,
+                dataType: 'json',
+                autoUpload: false,
+                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
+                maxFileSize: 999000,
+                // Enable image resizing, except for Android and Opera,
+                // which actually support image resizing, but fail to
+                // send Blob objects via XHR requests:
+                disableImageResize: /Android(?!.*Chrome)|Opera/
+                    .test(window.navigator.userAgent),
+                previewMaxWidth: 100,
+                previewMaxHeight: 100,
+                previewCrop: true
+            }).on('fileuploadadd', function(e, data) {
+                data.context = $('<div/>').appendTo('#files');
+                $.each(data.files, function(index, file) {
+                    var node = $('<p/>')
+                        .append($('<span/>').text(file.name));
+                    if (!index) {
+                        node
+                            .append('<br>')
+                            .append(uploadButton.clone(true).data(data));
+                    }
+                    node.appendTo(data.context);
+                });
+            }).on('fileuploadprocessalways', function(e, data) {
+                var index = data.index,
+                    file = data.files[index],
+                    node = $(data.context.children()[index]);
+                if (file.preview) {
+                    node
+                        .prepend('<br>')
+                        .prepend(file.preview);
+                }
+                if (file.error) {
+                    node
+                        .append('<br>')
+                        .append($('<span class="text-danger"/>').text(file.error));
+                }
+                if (index + 1 === data.files.length) {
+                    data.context.find('button')
+                        .text('Upload')
+                        .prop('disabled', !!data.files.error);
+                }
+            }).on('fileuploadprogressall', function(e, data) {
+                var progress = parseInt(data.loaded / data.total * 100, 10);
+                $('#progress .progress-bar').css(
+                    'width',
+                    progress + '%'
+                );
+            }).on('fileuploaddone', function(e, data) {
+                $.each(data.result.files, function(index, file) {
+                    if (file.url) {
+                        var link = $('<a>')
+                            .attr('target', '_blank')
+                            .prop('href', file.url);
+                        $(data.context.children()[index])
+                            .wrap(link);
+                    } else if (file.error) {
+                        var error = $('<span class="text-danger"/>').text(file.error);
+                        $(data.context.children()[index])
+                            .append('<br>')
+                            .append(error);
+                    }
+                });
+            }).on('fileuploadfail', function(e, data) {
+                $.each(data.files, function(index) {
+                    var error = $('<span class="text-danger"/>').text('File upload failed.');
+                    $(data.context.children()[index])
+                        .append('<br>')
+                        .append(error);
+                });
+            }).prop('disabled', !$.support.fileInput)
+            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+    });
+
+</script>
+
+<script src="js/vendor/bootstrap.min.js"></script>

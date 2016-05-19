@@ -1,0 +1,24 @@
+.jumbotron {
+    background: url('../img/events-hero.jpg') center center no-repeat;
+    background-size: cover;
+    position: relative;
+    color: white;
+}
+
+.dark-bg {
+    background: rgba(0,0,0,.5);
+}
+
+.upcomingEventsHeader {
+    h1, h2 {
+        margin: 0;
+        padding: 6px 0;
+    }
+}
+
+.event {
+    h3{
+        margin: 0;
+        padding: 6px 0;
+    }
+}
