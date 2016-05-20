@@ -4,6 +4,7 @@
   "description": "A front-end to create a new event for display on the zealoptics.com/events page",
   "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -22,6 +23,7 @@
     "express": "^4.13.4",
     "express-handlebars": "^3.0.0",
     "gcloud": "^0.33.0",
+    "moment": "^2.13.0",
     "multer": "^1.1.0"
   }
 }

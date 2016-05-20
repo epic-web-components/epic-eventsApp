@@ -1,15 +1,23 @@
-/*global require */
+/*global require, Promise */
 /*jslint node: true nomen: true es5: true */
 
 'use strict';
 
 var express = require('express'),
     app = express(),
+    moment = require('moment'),
+    fs = require('fs'),
+    /* Gooogle Cloud Config */
     GCLOUD_PROJECT = 'mauijim-1289',
     gcloud = require('gcloud')({
         projectId: GCLOUD_PROJECT,
         keyFilename: 'google_keyfile.json'
     }),
+    datastore = gcloud.datastore({}),
+    kind = 'Event',
+    gcs = gcloud.storage(),
+    bucket = gcs.bucket('mauijim-1289.appspot.com'),
+    /* app config */
     exphbs = require('express-handlebars'),
     bodyParser = require('body-parser'),
     multer = require('multer'),
@@ -25,11 +33,6 @@ var express = require('express'),
         dest: 'uploads/',
         storage: storage
     }),
-    /* Gooogle Cloud Config */
-    datastore = gcloud.datastore({}),
-    kind = 'Event',
-    gcs = gcloud.storage(),
-    bucket = gcs.bucket('mauijim-1289.appspot.com'),
     port = 3000;
 
 /* Handlebars view engine */
@@ -47,6 +50,7 @@ app.use(bodyParser.urlencoded({
 /* Static Routes */
 app.use(express.static(__dirname + '/public'));
 app.use('/uploads', express.static(__dirname + '/uploads'));
+app.use('/bower_components', express.static(__dirname + '/bower_components'));
 
 /* Functionality */
 app.use('/new', function (req, res, next) {
@@ -54,17 +58,68 @@ app.use('/new', function (req, res, next) {
 });
 
 app.use('/events', function (req, res, next) {
-    res.render('events', {});
+    var query = datastore.createQuery([kind]),
+        upcomingEvents = [],
+        pastEvents = [];
+
+    /*
+        This is loading pretty syncronously; ideally, we could have the fron-end stream the datastore objects and inject them into the DOM as a stream.
+    */
+
+    datastore.runQuery(query)
+        .on('error', console.error)
+        .on('data', function (entity) {
+
+            // sort events into "upcoming" and "past"
+            var now = moment().format(),
+                then = moment(entity.data.dateStart, 'MM-DD-YYYY').format();
+        
+            if (moment(now).isBefore(then)) {
+                upcomingEvents.push({
+                    name: entity.data.name,
+                    summary: entity.data.summary,
+                    location: entity.data.eventLocation,
+                    description: entity.data.description,
+                    dateStart: entity.data.dateStart,
+                    dateEnd: entity.data.dateEnd,
+                    timeStart: entity.data.timeStart,
+                    timeEnd: entity.data.timeEnd,
+                    blogPostUrl: entity.data.blogPostUrl,
+                    eventType: entity.data.eventType,
+                    externalUrl: entity.data.externalUrl,
+                    photos: entity.data.photos ? JSON.parse(entity.data.photos) : ''
+                });
+            } else {
+                pastEvents.push({
+                    name: entity.data.name,
+                    summary: entity.data.summary,
+                    location: entity.data.eventLocation,
+                    description: entity.data.description,
+                    dateStart: entity.data.dateStart,
+                    dateEnd: entity.data.dateEnd,
+                    timeStart: entity.data.timeStart,
+                    timeEnd: entity.data.timeEnd,
+                    blogPostUrl: entity.data.blogPostUrl,
+                    eventType: entity.data.eventType,
+                    externalUrl: entity.data.externalUrl,
+                    photos: entity.data.photos ? JSON.parse(entity.data.photos) : ''
+                });
+            }
+        })
+        .on('end', function () {
+            // all entities retrieved
+            res.render('events', {
+                upcomingEvents: upcomingEvents,
+                pastEvents: pastEvents
+            });
+        });
 });
 
 app.get('/', function (req, res, next) {
     res.redirect('/events');
 });
 
-app.post('/', upload.single('photo'), function (req, res) {
-    //    console.log(req.file);
-    //    console.log(req.body);
-
+app.post('/', upload.array(), function (req, res, next) {
     var eventData = {
             name: req.body.eventName,
             summary: req.body.summary,
@@ -75,11 +130,14 @@ app.post('/', upload.single('photo'), function (req, res) {
             timeStart: req.body.timeStart,
             timeEnd: req.body.timeEnd,
             blogPostUrl: req.body.blogPostUrl,
-            eventType: '',
+            eventType: req.body.eventType,
             externalUrl: req.body.externalUrl,
-            image: 'uploads/' + req.file.filename
+            photos: req.body.photosArray
         },
-        eventKey = datastore.key(kind);
+        eventKey = datastore.key(kind),
+        uploadOptions = {
+            public: true
+        };
 
     // save to google datastore
     datastore.save({
@@ -87,23 +145,25 @@ app.post('/', upload.single('photo'), function (req, res) {
         data: eventData
     }, function (err, apiResponse) {
         if (err) {
+            console.log(apiResponse);
             console.log(err);
         }
-        console.log(apiResponse);
+        res.redirect('/events');
     });
+});
 
-    res.render('events', {
-        newEventTitle: req.body.eventName,
-        newEventLocation: req.body.eventLocation,
-        newEventDateStart: req.body.dateStart,
-        newEventDateEnd: req.body.dateEnd,
-        newEventTimeStart: req.body.timeStart,
-        newEventTimeEnd: req.body.timeEnd,
-        newEventSummary: req.body.summary,
-        newEventDescription: req.body.description,
-        newEventBlogPostUrl: req.body.blogPostUrl,
-        newEventExternalUrl: req.body.externalUrl,
-        newEventImgUrl: 'uploads/' + req.file.filename
+app.post('/photoUpload', upload.single('file'), function (req, res, next) {
+    var uploadOptions = {
+        public: true
+    };
+
+    // upload to google cloud storage
+    bucket.upload(req.file.path, uploadOptions, function (err, file2) {
+        if (err) {
+            console.log(err);
+        }
+
+        res.status(200).send(file2.metadata.mediaLink);
     });
 });
 

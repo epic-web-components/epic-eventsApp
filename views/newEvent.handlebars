@@ -1,301 +1,215 @@
 <div class="jumbotron">
-        <div class="container">
-            <h1>Hello, events team!</h1>
-            <div class="row dark-bg">
-                <div class="col-md-6">
-                    <h4>What/why?</h4>
-                    <p>Use this page to create a new event, whose data will be automatically saved and uploaded to to <a href="//www.zealoptics.com/events" target="_blank">ZealOptics.com/Events</a> page.</p>
-                </div>
-                <div class="col-md-6">
-                    <h4>Questions?</h4>
-                    <p>Email Alex (agoodwin@zealoptics.com) or Max (mleitch@zealoptics.com).</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <div class="container">
-        <div class="row">
-            <div class="col-sm-12">
-                <form class="form-horizontal well" id="newEventForm" method="post" action="/" ENCTYPE="multipart/form-data">
-                    <fieldset>
-
-                        <!-- Form Name -->
-                        <div class="row">
-                            <legend class="col-md-8 col-md-offset-2">New Event <small class="pull-right">(* indicated required)</small></legend>
-                        </div>
-
-                        <!-- Name -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="eventName">Event name *</label>
-                            <div class="col-md-4">
-                                <input id="eventName" name="eventName" type="text" placeholder="" class="form-control input-md" required="">
-
-                            </div>
-                        </div>
-
-                        <!-- Location -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="eventLocation">Location *</label>
-                            <div class="col-md-4">
-                                <input id="eventLocation" name="eventLocation" type="text" placeholder="" class="form-control input-md" required="">
-                                <span class="help-block">This can be an address, city, or general information</span>
-                            </div>
-                        </div>
-
-                        <!-- date start -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="dateStart">Date Start *</label>
-
-                            <div class="col-md-4">
-                                <div class="input-group date">
-                                    <input type="text" class="form-control" name="dateStart"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- time start -->
-                        <div class="form-group">
-                            <label class="col-md-5 control-label" for="timeStart">Time Start</label>
-
-                            <div class="col-md-3">
-                                <div class="input-group time">
-                                    <input type="text" class="form-control" name="timeStart" placeholder="3pm"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- date end -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="dateEnd">Date End *</label>
-
-                            <div class="col-md-4">
-                                <div class="input-group date">
-                                    <input type="text" class="form-control" name="dateEnd"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Time End -->
-                        <div class="form-group">
-                            <label class="col-md-5 control-label" for="timeEnd">Time End</label>
-
-                            <div class="col-md-3">
-                                <div class="input-group time">
-                                    <input type="text" class="form-control" name="timeEnd" placeholder="5pm"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <!-- summary -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="summary">Summary *</label>
-
-                            <div class="col-md-4 summary">
-                                <input type="text" class="form-control input-md" name="summary" maxlength="50">
-                                <span class="help-block">Up to 50 characters briefly describing the event.</span>
-                            </div>
-                        </div>
-
-                        <!-- description -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="description">Description</label>
-
-                            <div class="col-md-4 description">
-                                <textarea class="form-control" rows="3" name="description"></textarea>
-                                <span class="help-block">Longer-form text describing the event. Appears only on the individual event page.</span>
-                            </div>
-                        </div>
-
-                        <!-- blog URL -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="blogPostUrl">Blog Post URL</label>
-                            <div class="col-md-4">
-                                <input id="blogPostUrl" name="blogPostUrl" type="text" placeholder="http://blog.zealoptics.com/post/144200845501/zeal-launches-wilderness-wednesdays-here-in" class="form-control input-md">
-                                <span class="help-block">You may leave this blank if no blog post exists.</span>
-                            </div>
-                        </div>
-
-                        <!-- External URL -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="externalUrl">External URL</label>
-                            <div class="col-md-4">
-                                <input id="eventName" name="externalUrl" type="text" placeholder="http://dewtour.com" class="form-control input-md">
-                                <span class="help-block"></span>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <!-- photos -->
-                        <div class="form-group">
-                            <label class="col-md-4 control-label" for="photo">Event Photo</label>
-                            <div class="col-md-4">
-                                <input id="photo" name="photo" type="file" placeholder="" required="">
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="form-group">
-                            <div class="col-md-4 col-md-offset-4">
-                                <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Event">
-                            </div>
-                        </div>
-
-                    </fieldset>
-                </form>
-
+        <h1>Hello, events team!</h1>
+        <div class="row dark-bg">
+            <div class="col-md-6">
+                <h4>What/why?</h4>
+                <p>Use this page to create a new event, whose data will be automatically saved and uploaded to to <a href="//www.zealoptics.com/events" target="_blank">ZealOptics.com/Events</a> page.</p>
+            </div>
+            <div class="col-md-6">
+                <h4>Questions?</h4>
+                <p>Email Alex (agoodwin@zealoptics.com) or Max (mleitch@zealoptics.com).</p>
             </div>
         </div>
-
-        <hr>
-
-        <footer>
-            <p>&copy; Zeal Optics 2016</p>
-        </footer>
     </div>
-    <!-- /container -->
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="js/bootstrap-datepicker.min.js"></script>
+</div>
 
-    <!-- file upload stuff -->
-    <script src="js/vendor/jquery.ui.widget.js"></script>
-    <script src="js/load-image.all.min.js"></script>
-    <script src="js/canvas-to-blob.min.js"></script>
-    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-    <script src="js/jquery.iframe-transport.js"></script>
-    <!-- The basic File Upload plugin -->
-    <script src="js/jquery.fileupload.js"></script>
-    <!-- The File Upload processing plugin -->
-    <script src="js/jquery.fileupload-process.js"></script>
-    <!-- The File Upload image preview & resize plugin -->
-    <script src="js/jquery.fileupload-image.js"></script>
-    <!-- The File Upload validation plugin -->
-    <script src="js/jquery.fileupload-validate.js"></script>
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal well" id="newEventForm" method="post" action="/" ENCTYPE="multipart/form-data">
+                <fieldset>
 
-    <!-- google cloud api -->
-    <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+                    <!-- Form Name -->
+                    <div class="row">
+                        <legend class="col-md-8 col-md-offset-2">New Event <small class="pull-right">(* indicated required)</small></legend>
+                    </div>
 
-    <!-- general -->
-    <script>
-        window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+                    <!-- Name -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="eventName">Event name *</label>
+                        <div class="col-md-4">
+                            <input id="eventName" name="eventName" type="text" placeholder="" class="form-control input-md" required="">
 
-        $('.input-group.date').datepicker({});
+                        </div>
+                    </div>
 
+                    <!-- Location -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="eventLocation">Location *</label>
+                        <div class="col-md-4">
+                            <input id="eventLocation" name="eventLocation" type="text" placeholder="" class="form-control input-md" required="">
+                            <span class="help-block">This can be an address, city, or general information</span>
+                        </div>
+                    </div>
 
-        $('#newEventForm').on('submit', function(e) {
-//            e.preventDefault();
+                    <!-- date start -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dateStart">Date Start *</label>
 
-            console.log($(this).serialize());
-        });
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="dateStart"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
 
-//        gapi.client.setApiKey(YOUR API KEY);
+                    <!-- time start -->
+                    <div class="form-group">
+                        <label class="col-md-5 control-label" for="timeStart">Time Start</label>
 
-        // file upload
-        $(function() {
-            'use strict';
+                        <div class="col-md-3">
+                            <div class="input-group time">
+                                <input type="text" class="form-control" name="timeStart" placeholder="3pm"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            </div>
+                        </div>
+                    </div>
 
-            var projectId = '451604441788',
-                bucket = 'mauijim-1289.appspot.com/event-images',
-                url = 'https://www.googleapis.com/upload/storage/v1/b/myBucket/o',
-                uploadButton = $('<button/>')
-                .addClass('btn btn-primary')
-                .prop('disabled', true)
-                .text('Processing...')
-                .on('click', function() {
-                    var $this = $(this),
-                        data = $this.data();
-                    $this
-                        .off('click')
-                        .text('Abort')
-                        .on('click', function() {
-                            $this.remove();
-                            data.abort();
-                        });
-                    data.submit().always(function() {
-                        $this.remove();
-                    });
-                });
-            $('#fileupload').fileupload({
-                    url: url,
-                    dataType: 'json',
-                    autoUpload: false,
-                    acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-                    maxFileSize: 999000,
-                    // Enable image resizing, except for Android and Opera,
-                    // which actually support image resizing, but fail to
-                    // send Blob objects via XHR requests:
-                    disableImageResize: /Android(?!.*Chrome)|Opera/
-                        .test(window.navigator.userAgent),
-                    previewMaxWidth: 100,
-                    previewMaxHeight: 100,
-                    previewCrop: true
-                }).on('fileuploadadd', function(e, data) {
-                    data.context = $('<div/>').appendTo('#files');
-                    $.each(data.files, function(index, file) {
-                        var node = $('<p/>')
-                            .append($('<span/>').text(file.name));
-                        if (!index) {
-                            node
-                                .append('<br>')
-                                .append(uploadButton.clone(true).data(data));
-                        }
-                        node.appendTo(data.context);
-                    });
-                }).on('fileuploadprocessalways', function(e, data) {
-                    var index = data.index,
-                        file = data.files[index],
-                        node = $(data.context.children()[index]);
-                    if (file.preview) {
-                        node
-                            .prepend('<br>')
-                            .prepend(file.preview);
-                    }
-                    if (file.error) {
-                        node
-                            .append('<br>')
-                            .append($('<span class="text-danger"/>').text(file.error));
-                    }
-                    if (index + 1 === data.files.length) {
-                        data.context.find('button')
-                            .text('Upload')
-                            .prop('disabled', !!data.files.error);
-                    }
-                }).on('fileuploadprogressall', function(e, data) {
-                    var progress = parseInt(data.loaded / data.total * 100, 10);
-                    $('#progress .progress-bar').css(
-                        'width',
-                        progress + '%'
-                    );
-                }).on('fileuploaddone', function(e, data) {
-                    $.each(data.result.files, function(index, file) {
-                        if (file.url) {
-                            var link = $('<a>')
-                                .attr('target', '_blank')
-                                .prop('href', file.url);
-                            $(data.context.children()[index])
-                                .wrap(link);
-                        } else if (file.error) {
-                            var error = $('<span class="text-danger"/>').text(file.error);
-                            $(data.context.children()[index])
-                                .append('<br>')
-                                .append(error);
-                        }
-                    });
-                }).on('fileuploadfail', function(e, data) {
-                    $.each(data.files, function(index) {
-                        var error = $('<span class="text-danger"/>').text('File upload failed.');
-                        $(data.context.children()[index])
-                            .append('<br>')
-                            .append(error);
-                    });
-                }).prop('disabled', !$.support.fileInput)
-                .parent().addClass($.support.fileInput ? undefined : 'disabled');
-        });
+                    <!-- date end -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="dateEnd">Date End *</label>
 
-    </script>
+                        <div class="col-md-4">
+                            <div class="input-group date">
+                                <input type="text" class="form-control" name="dateEnd"><span class="input-group-addon"><i class="glyphicon glyphicon-th"></i></span>
+                            </div>
+                        </div>
+                    </div>
 
-    <script src="js/vendor/bootstrap.min.js"></script>
+                    <!-- Time End -->
+                    <div class="form-group">
+                        <label class="col-md-5 control-label" for="timeEnd">Time End</label>
+
+                        <div class="col-md-3">
+                            <div class="input-group time">
+                                <input type="text" class="form-control" name="timeEnd" placeholder="5pm"><span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <!-- summary -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="summary">Summary *</label>
+
+                        <div class="col-md-4 summary">
+                            <input type="text" class="form-control input-md" name="summary" maxlength="50">
+                            <span class="help-block">Up to 50 characters briefly describing the event.</span>
+                        </div>
+                    </div>
+
+                    <!-- description -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="description">Description</label>
+
+                        <div class="col-md-4 description">
+                            <textarea class="form-control" rows="3" name="description"></textarea>
+                            <span class="help-block">Longer-form text describing the event. Appears only on the individual event page.</span>
+                        </div>
+                    </div>
+
+                    <!-- event type -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="eventType">Event Type</label>
+
+                        <div class="col-md-4">
+                            <select class="form-control" name="eventType" id="eventType">
+                                <option value="regular">Regular Event</option>
+                                <option value="featured">Featured Event</option>
+                            </select>
+                            <span class="help-block">Most events should be regular- use 'featured' only for large events</span>
+                        </div>
+                    </div>
+
+                    <!-- blog URL -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="blogPostUrl">Blog Post URL</label>
+                        <div class="col-md-4">
+                            <input id="blogPostUrl" name="blogPostUrl" type="text" placeholder="http://blog.zealoptics.com/post/144200845501/zeal-launches-wilderness-wednesdays-here-in" class="form-control input-md">
+                            <span class="help-block">You may leave this blank if no blog post exists.</span>
+                        </div>
+                    </div>
+
+                    <!-- External URL -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="externalUrl">External URL</label>
+                        <div class="col-md-4">
+                            <input id="eventName" name="externalUrl" type="text" placeholder="http://dewtour.com" class="form-control input-md">
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <hr>
+                    
+                    <!-- photos -->
+                    <div class="form-group">
+                        <label class="col-md-4 control-label" for="photos">Photos</label>
+                        <div class="col-md-4">
+                            <div id="dropzone" class="dropzone"></div>
+                            <input type="hidden" value='[]' id="photosArray" name="photosArray">
+                        </div>
+                    </div>
+                    
+                    <hr>
+
+                    <!-- submit -->
+                    <div class="form-group">
+                        <div class="col-md-4 col-md-offset-4">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Event">
+                        </div>
+                    </div>
+
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <hr>
+
+    <footer>
+        <p>&copy; Zeal Optics 2016</p>
+    </footer>
+</div>
+<!-- /container -->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="js/bootstrap-datepicker.min.js"></script>
+
+<!-- dropzone -->
+<script src="bower_components/dropzone/dist/dropzone.js"></script>
+
+<!-- google cloud api -->
+<script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+<!-- general -->
+<script>
+    window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
+
+    $('.input-group.date').datepicker({});
+    
+    Dropzone.options.dropzone = false;
+    
+    var myDropzone = new Dropzone("#dropzone", {
+        url: "/photoUpload",
+        maxFilesize: 10, // mb
+        paramName: "file",
+        method: "post",
+        clickable: true,
+        acceptedFiles: 'image/*'
+    });
+    
+    myDropzone.on('complete', function(file) {
+        /*
+            Push public url(s) of all uploaded files to hidden input field
+        */
+        var publicUrl = file.xhr.responseText,
+            photos = JSON.parse($('#photosArray').val());
+        
+        photos.push(publicUrl);
+        
+        $('#photosArray').val(JSON.stringify(photos));
+    });
+
+</script>
+
+<script src="js/vendor/bootstrap.min.js"></script>

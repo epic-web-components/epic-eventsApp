@@ -3,20 +3,39 @@
   background: url("../img/events-hero.jpg") center center no-repeat;
   background-size: cover;
   position: relative;
-  color: white; }
+  color: white;
+  padding: 96px 0 0 0; }
 
-/* line 8, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+/* line 9, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
 .dark-bg {
-  background: rgba(0, 0, 0, 0.5); }
+  background: rgba(0, 0, 0, 0.6); }
 
-/* line 13, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+/* line 14, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
 .upcomingEventsHeader h1, .upcomingEventsHeader h2 {
   margin: 0;
   padding: 6px 0; }
 
-/* line 20, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+/* line 21, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
 .event h3 {
   margin: 0;
   padding: 6px 0; }
+
+/* line 26, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+.event .photos {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: flex-start;
+  align-items: center;
+  justify-content: space-around; }
+  /* line 33, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+  .event .photos img {
+    flex: 0 1 33%;
+    max-width: 33%; }
+
+/* line 41, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+#newEventForm fu-area:not([style-scope]):not(.style-scope) {
+  height: 150px;
+  width: 100%;
+  margin: 0 auto; }
 
 /*# sourceMappingURL=style.css.map */
