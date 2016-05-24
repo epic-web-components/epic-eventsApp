@@ -10,37 +10,206 @@
     background: rgba(0,0,0,.6);
 }
 
-.upcomingEventsHeader {
-    h1, h2 {
-        margin: 0;
-        padding: 6px 0;
+@keyframes fadeIn {
+    0% {
+        background: rgba(0,0,0,0);
+    }
+    100% {
+        background: rgba(0,0,0,.8);
     }
 }
 
-.event {
-    h3{
-        margin: 0;
-        padding: 6px 0;
-    }
+#lightboxBg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.8);
+    z-index: 10;
+    animation: fadeIn .5s ease;
+    animation-iteration-count: 1;
+}
+
+.container {
+    position: relative;
     
-    .photos {
-        display: flex;
-        flex-flow: row wrap;
-        align-content: flex-start;
-        align-items: center;
-        justify-content: space-around;
+    .upcomingEventsHeader {
+        margin: 1em 0;
         
-        img {
-            flex: 0 1 33%;
-            max-width: 33%;
+        h1, h2 {
+            margin: 0;
+            padding: 6px 0;
         }
     }
-}
+    
+    .event {
+        z-index: 11;
+        
+        .eventName {
+            padding: 0 15px;
+            
+            input[type=text] {
+                padding: 0 .33em;
+                font-size: 1.5em;
+            }
 
-#newEventForm {
-    fu-area:not([style-scope]):not(.style-scope) {
-        height: 150px;
-        width: 100%;
-        margin: 0 auto;
+            h3 {
+                margin: 0 0 6px;
+            }
+        }
+
+        .edit-delete {
+            padding: 0 15px;
+            text-align: right;
+        }
+
+        .form-group {
+            margin: 1em 0;
+
+            &.startEnd {
+                input[type=text] {
+                    width: auto;
+                }
+            }
+
+            input[type=text] {
+                padding: .5em;
+                width: 100%;
+            }
+
+            textarea {
+                width: 100%;
+                padding: .5em;
+                border: 2px solid rgb(238, 238, 238);
+            }
+
+            &.eventType {
+                input[type=text] {
+                    text-transform: capitalize;
+                }
+            }
+
+            &.photos {
+                .images, .dropzone {
+                    font-size: 0;
+                    display: flex;
+                    flex-flow: row wrap;
+                    align-content: flex-start;
+                    align-items: center;
+                    justify-content: flex-start;
+                    background: white;
+                    padding: 10px;
+                    border: 2px solid rgb(238, 238, 238);
+                    position: relative;
+                    
+                    span.featuredMessage {
+                        position: absolute;
+                        height: 100%;
+                        width: calc(25% + 10px);
+                        background: #036;
+                        color: white;
+                        top: 0;
+                        left: 0;
+                        font-size: 1.25rem;
+                        text-align: center;
+                        padding-top: 10px;
+                    }
+                    
+                    > div{
+                        position: relative;
+                        flex: 0 1 20%;
+                        max-width: 20%;
+                        margin: 2.5%;
+                        font-size: 1rem;
+                        order: 1;
+                        
+                        &.dz-preview{
+                            min-height: 0;
+                            
+                            .dz-image {
+                                width: 100%;
+                                height: auto;
+                            }
+                        }
+                        
+                        &.dz-message {
+                            flex: 1 1 100%;
+                            max-width: 100%;
+                            order: -1;
+                            padding-left: 25%;
+                        }
+                        
+                        &.featured {
+                            border: 5px solid white;
+                            max-width: 40%;
+                            order: 0;
+                        }
+                        
+                        a{
+                            position: absolute;
+                            top: -10px;
+                            left: -10px;
+                            background:red;
+                            color: white;
+                            display: inline-block;
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 50%;
+                            font-size: 1rem;
+                            padding: 5px;
+                            line-height: 1rem;
+                            text-align: center;
+                            box-sizing: border-box;
+                            
+                            &:hover {
+                                text-decoration: none;
+                                background: white;
+                                color: red;
+                                border: 1px solid red;
+                                cursor: pointer;
+                            }
+                        }
+                        img {
+                            width: 100%;
+                            
+                            &:hover {
+                                cursor: pointer;
+                            }
+                        }
+                    }
+                    
+                    &.dropzone {
+                        .dz-message {
+                            u {
+                                background: #036;
+                                color: white;
+                            }
+                        }
+                        
+                        > div {
+                            img{
+                                &:hover {
+                                    cursor: default;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    #newEventForm {
+        .dropzone {
+            > div{
+                flex: 1 1 100%;
+                max-width: 100%;
+            }
+            .featured {
+                border-color: #036;
+                border-width: 10px;
+            }
+        }
     }
 }

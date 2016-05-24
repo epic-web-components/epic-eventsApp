@@ -57,7 +57,7 @@ app.use('/new', function (req, res, next) {
     res.render('newEvent', {});
 });
 
-app.use('/events', function (req, res, next) {
+app.get('/events', function (req, res, next) {
     var query = datastore.createQuery([kind]),
         upcomingEvents = [],
         pastEvents = [];
@@ -71,14 +71,15 @@ app.use('/events', function (req, res, next) {
         .on('data', function (entity) {
 
             // sort events into "upcoming" and "past"
-            var now = moment().format(),
-                then = moment(entity.data.dateStart, 'MM-DD-YYYY').format();
-        
-            if (moment(now).isBefore(then)) {
+            var now = moment(),
+                then = moment(entity.data.dateStart, 'MM-DD-YYYY');
+
+            if (now.isBefore(then)) {
                 upcomingEvents.push({
+                    id: entity.key.id,
                     name: entity.data.name,
                     summary: entity.data.summary,
-                    location: entity.data.eventLocation,
+                    location: entity.data.location,
                     description: entity.data.description,
                     dateStart: entity.data.dateStart,
                     dateEnd: entity.data.dateEnd,
@@ -87,13 +88,15 @@ app.use('/events', function (req, res, next) {
                     blogPostUrl: entity.data.blogPostUrl,
                     eventType: entity.data.eventType,
                     externalUrl: entity.data.externalUrl,
+                    featuredImage: entity.data.featuredImage,
                     photos: entity.data.photos ? JSON.parse(entity.data.photos) : ''
                 });
             } else {
                 pastEvents.push({
+                    id: entity.key.id,
                     name: entity.data.name,
                     summary: entity.data.summary,
-                    location: entity.data.eventLocation,
+                    location: entity.data.location,
                     description: entity.data.description,
                     dateStart: entity.data.dateStart,
                     dateEnd: entity.data.dateEnd,
@@ -102,6 +105,7 @@ app.use('/events', function (req, res, next) {
                     blogPostUrl: entity.data.blogPostUrl,
                     eventType: entity.data.eventType,
                     externalUrl: entity.data.externalUrl,
+                    featuredImage: entity.data.featuredImage,
                     photos: entity.data.photos ? JSON.parse(entity.data.photos) : ''
                 });
             }
@@ -132,12 +136,10 @@ app.post('/', upload.array(), function (req, res, next) {
             blogPostUrl: req.body.blogPostUrl,
             eventType: req.body.eventType,
             externalUrl: req.body.externalUrl,
+            featuredImage: req.body.featuredImage,
             photos: req.body.photosArray
         },
-        eventKey = datastore.key(kind),
-        uploadOptions = {
-            public: true
-        };
+        eventKey = datastore.key(kind);
 
     // save to google datastore
     datastore.save({
@@ -152,6 +154,48 @@ app.post('/', upload.array(), function (req, res, next) {
     });
 });
 
+app.post('/updateEvent', upload.array(), function (req, res, next) {
+    var eventData = {
+            name: req.body.eventName,
+            summary: req.body.summary,
+            location: req.body.location,
+            description: req.body.description,
+            dateStart: req.body.dateStart,
+            dateEnd: req.body.dateEnd,
+            timeStart: req.body.timeStart,
+            timeEnd: req.body.timeEnd,
+            blogPostUrl: req.body.blogUrl,
+            eventType: req.body.eventType,
+            externalUrl: req.body.externalUrl,
+            featuredImage: req.body.featuredImage,
+            photos: req.body.photos
+        },
+        eventId = parseInt(req.body.id, 10),
+        eventKey = datastore.key(['Event', eventId]);
+
+    //    res.send(eventKey);
+
+    // update db entry
+    datastore.update({
+        key: eventKey,
+        data: eventData
+    }, function (err, apiResponse) {
+        if (err) {
+            console.log(err);
+            res.status(500).send('Datastore update failed');
+        } else {
+            // return updated entity
+            datastore.get(eventKey, function (err, entity) {
+                if (err) {
+                    console.log(err);
+                    res.status(500).send('Error getting event from db');
+                }
+                res.status(200).send(JSON.stringify(entity));
+            });
+        }
+    });
+});
+
 app.post('/photoUpload', upload.single('file'), function (req, res, next) {
     var uploadOptions = {
         public: true
@@ -163,8 +207,29 @@ app.post('/photoUpload', upload.single('file'), function (req, res, next) {
             console.log(err);
         }
 
+        fs.unlink(req.file.path);
+
         res.status(200).send(file2.metadata.mediaLink);
     });
+});
+
+app.post('/deleteEvent', function (req, res, next) {
+    var eventId = parseInt(req.body.id, 10),
+        eventKey = datastore.key(['Event', eventId]);
+
+    // delete event entity
+    datastore.delete(eventKey, function (err, apiResponse) {
+        if (err) {
+            console.log(err);
+            console.log(apiResponse);
+            res.send(500).send('Error while deleting event');
+        }
+
+        res.status(200).send('Event successfully deleted');
+
+    });
+
+    // should delete associated images in storage
 });
 
 // Basic 404 handler

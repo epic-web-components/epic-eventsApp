@@ -29,57 +29,117 @@
 
     {{#each upcomingEvents}}
     <div class="row well event">
-        <div class="col-xs-12">
-            <h3>{{this.name}} 
-                <div class="text-right">
-                    <a href="#" type="button" class="btn btn-default">
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
-                    </a>
-                    <a href="#" type="button" class="btn btn-danger">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
-                    </a>
-                </div>
-            </h3>
-            <h4>{{this.summary}}</h4>
-            <p>Location: {{this.location}}</p>
-            <p>Dates: {{this.dateStart}} - {{this.dateEnd}}</p>
-            <p>Time: {{this.timeStart}} - {{this.timeEnd}}</p>
-            <p>Blog Post: {{this.blogPostUrl}}</p>
-            <p>Website: {{this.externalUrl}}</p>
-            <p>Description: {{this.description}}</p>
-            <p>Event Type: {{this.eventType}}</p>
-            
-            <div class="photos">
-                {{#each this.photos}}
-                    <img src="{{this}}">
-                {{/each}}
+        <form class="col-xs-12 form-horizontal" method="post" action="/">
+            <input type="hidden" name="id" value="{{this.id}}">
+            <div class="col-md-7 col-md-offset-2 eventName">
+                <h3>{{this.name}}</h3>
+                <input type="text" class="hidden" value="{{this.name}}" name="name" readonly>
             </div>
-            
-        </div>
+            <div class="col-md-3 edit-delete">
+                <a href="#" type="button" class="btn btn-default edit">
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span> Edit
+                </a>
+                <a href="#" type="button" class="btn btn-default cancel hidden">
+                    <span class="glyphicon glyphicon-remove-circle"></span> Cancel
+                </a>
+                <a href="#" type="button" class="btn btn-danger delete hidden">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span> Delete
+                </a>
+            </div>
+            <div class="clearfix"></div>
+
+            <!-- summary -->
+            <div class="form-group summary">
+                <label class="col-md-2 control-label" for="summary">Summary:</label>
+                <div class="col-md-10">
+                    <input type="text" value="{{this.summary}}" size="50" name="summary" readonly>
+                </div>
+            </div>
+
+            <!-- location -->
+            <div class="form-group location">
+                <label class="col-md-2 control-label" for="location">Location:</label>
+                <div class="col-md-10">
+                    <input type="text" value="{{this.location}}" size="50" name="location" readonly>
+                </div>
+            </div>
+
+            <!-- start/end -->
+            <div class="form-group startEnd">
+                <label class="col-md-2 control-label" for="dateStart">Dates/Times:</label>
+                <div class="col-md-10">
+                    <input type="text" value="{{this.dateStart}}" size="10" name="dateStart" readonly>
+                    <input type="text" value="{{this.timeStart}}" size="5" name="timeStart" readonly> -
+                    <input type="text" value="{{this.dateEnd}}" size="10" name="dateEnd" readonly>
+                    <input type="text" value="{{this.timeEnd}}" size="5" name="timeEnd" readonly>
+                </div>
+            </div>
+
+            <!-- Blog Url -->
+            <div class="form-group blogUrl">
+                <label class="col-md-2 control-label" for="blogUrl">Blog URL:</label>
+                <div class="col-md-10">
+                    <input type="text" value="{{this.blogPostUrl}}" size="50" name="blogUrl" readonly>
+                </div>
+            </div>
+
+            <!-- External Url -->
+            <div class="form-group externalUrl">
+                <label class="col-md-2 control-label" for="externalUrl">External URL:</label>
+                <div class="col-md-10">
+                    <input type="text" value="{{this.externalUrl}}" size="50" name="externalUrl" readonly>
+                </div>
+            </div>
+
+            <!-- Event Type -->
+            <div class="form-group eventType">
+                <label class="col-md-2 control-label" for="eventType">Event Type:</label>
+                <div class="col-md-10">
+                    <input type="text" value="{{this.eventType}}" size="50" name="eventType" readonly>
+                </div>
+            </div>
+
+            <!-- Photos -->
+            <div class="form-group photos">
+                <label class="col-md-2 control-label" for="photos">Photos:</label>
+                <div class="col-md-10">
+                    <!-- form data dynamically scraped before submit -->
+                    <div class="images dropzone">
+                        <span class="featuredMessage">Featured Photo</span>
+                        <div class="hidden featuredImageData">{{this.featuredImage}}</div>
+                        {{#each this.photos}}
+                        <div>
+                            <a href="#" class="deletePhoto hidden" id="delete-photo-{{@index}}">X</a>
+                            <img src="{{this}}" id="photo-{{@index}}">
+                        </div>
+                        {{/each}}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Description -->
+            <div class="form-group description">
+                <label class="col-md-2 control-label" for="description">Description:</label>
+                <div class="col-md-10">
+                    <textarea rows="5" cols="50" name="description" readonly>{{this.description}}</textarea>
+                </div>
+            </div>
+
+            <!-- submit -->
+            <div class="form-group hidden submit">
+                <div class="col-md-4 col-md-offset-4">
+                    <input type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton-{{@index}}" value="Submit">
+                </div>
+            </div>
+
+        </form>
     </div>
     {{/each}}
-    
+
     <hr>
 
     <h1>Past Events</h1> {{#each pastEvents}}
-    <div class="row well event">
-        <div class="col-xs-12">
-            <h3>{{this.eventName}}</h3>
-            <h4>{{this.summary}}</h4>
-            <p>Location: {{this.location}}</p>
-            <p>Dates: {{this.dateStart}} - {{this.dateEnd}}</p>
-            <p>Time: {{this.timeStart}} - {{this.timeEnd}}</p>
-            <p>Blog Post: {{this.blogPostUrl}}</p>
-            <p>Website: {{this.externalUrl}}</p>
-            <p>Description: {{this.description}}</p>
-            <p>Event Type: {{this.eventType}}</p>
-            <p>{{this.photos}}</p>
-            
-            {{#each this.photos}}
-            <p>{{this}}</p>
-            {{/each}}
-        </div>
-    </div>
+    <!-- temporarily redacted -->
     {{/each}}
 
     <hr>
@@ -92,140 +152,314 @@
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="js/bootstrap-datepicker.min.js"></script>
 
-<!-- file upload stuff -->
-<script src="js/vendor/jquery.ui.widget.js"></script>
-<script src="js/load-image.all.min.js"></script>
-<script src="js/canvas-to-blob.min.js"></script>
-<!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
-<script src="js/jquery.iframe-transport.js"></script>
-<!-- The basic File Upload plugin -->
-<script src="js/jquery.fileupload.js"></script>
-<!-- The File Upload processing plugin -->
-<script src="js/jquery.fileupload-process.js"></script>
-<!-- The File Upload image preview & resize plugin -->
-<script src="js/jquery.fileupload-image.js"></script>
-<!-- The File Upload validation plugin -->
-<script src="js/jquery.fileupload-validate.js"></script>
-
 <!-- google cloud api -->
 <script src="https://apis.google.com/js/client.js?onload=handleClientLoad"></script>
+
+<!-- dropzone -->
+<script src="bower_components/dropzone/dist/dropzone.js"></script>
 
 <!-- general -->
 <script>
     window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
 
-    $('.input-group.date').datepicker({});
+    var myDropzone;
 
-
-    $('#newEventForm').on('submit', function(e) {
-        //            e.preventDefault();
-
-        console.log($(this).serialize());
-    });
-
-    //        gapi.client.setApiKey(YOUR API KEY);
-
-    // file upload
     $(function() {
-        'use strict';
 
-        var projectId = '451604441788',
-            bucket = 'mauijim-1289.appspot.com/event-images',
-            url = 'https://www.googleapis.com/upload/storage/v1/b/myBucket/o',
-            uploadButton = $('<button/>')
-            .addClass('btn btn-primary')
-            .prop('disabled', true)
-            .text('Processing...')
-            .on('click', function() {
-                var $this = $(this),
-                    data = $this.data();
-                $this
-                    .off('click')
-                    .text('Abort')
-                    .on('click', function() {
-                        $this.remove();
-                        data.abort();
+        // highlight featured images for each event
+        $('.featuredImageData').each(function() {
+            let data = $(this).text().trim();
+            $(this).parent().find('img[src="' + data + '"]').parent().addClass('featured');
+        });
+
+        // Disable auto discover for all elements:
+        Dropzone.autoDiscover = false;
+
+        /*
+            "Edit" Functionality
+                Clicking the edit button makes the event form active
+                Input forms made editable
+                Submit button appears
+                Ability to add/delete images and change which is featured
+        */
+        $('a.edit').each(function() {
+            $(this).click(function(e) {
+                e.preventDefault();
+
+                // the $('.event') element
+                var activeEvent = $(this).parent().parent().parent();
+
+                // create lightbox background
+                $('body').prepend('<div id="lightboxBg"></div>');
+                // move lightbox to correct y position
+                $('#lightboxBg').css({
+                    top: $(window).scrollTop()
+                });
+                // ability to close lightbox
+                $('#lightboxBg').click(function() {
+                    closeEdit(activeEvent);
+                });
+                // keep lightbox on user window
+                $(window).scroll(function() {
+                    $('#lightboxBg').css({
+                        top: $(window).scrollTop()
                     });
-                data.submit().always(function() {
-                    $this.remove();
+                });
+                // make event pop above lightbox
+                $(activeEvent).css({
+                    position: 'relative'
+                });
+
+                /* 
+                    Activate Form
+                */
+
+                // hide edit and show cancel + delete buttons
+                $(this).addClass('hidden');
+                $(this).parent().find('a.cancel').removeClass('hidden');
+                $(this).parent().find('a.cancel').click(function(e) {
+                    e.preventDefault();
+                    closeEdit(activeEvent);
+                });
+                $(this).parent().find('a.delete').removeClass('hidden');
+
+                // enable submit button
+                $(activeEvent).find('form').find('.submit').removeClass('hidden');
+
+                // swap event title h3 for input
+                $(activeEvent).find('.eventName h3').addClass('hidden');
+                $(activeEvent).find('.eventName input').removeClass('hidden');
+
+                // make all inputs editable
+                $(activeEvent).find('input[type=text], textarea').each(function() {
+                    this.readOnly = false;
+                });
+
+                /* 
+                    Make images editable
+                        Clicking on image makes it the "featured image"
+                        Clicking the "x" deletes the image
+                            * If it was featured, the first of the existing 
+                              images is made to be the new featured
+                */
+                $(activeEvent).find('.images img').each(function() {
+                    // allow for re-selection of featured image
+                    $(this).click(function(e) {
+                        featurePhoto($(this));
+                    });
+
+                    // allow for photos to be deleted
+                    $(this).siblings('a.deletePhoto').removeClass('hidden');
+                    $(this).siblings('a.deletePhoto').click(function(e) {
+                        e.preventDefault();
+
+                        deletePhoto($(this));
+                    });
+                });
+
+                /*
+                    Allow for photos to be added
+                */
+                var dz = $(activeEvent).find('.images');
+
+                /*
+                    Make sure myDropzone refers to the correct event
+                */
+                if (myDropzone) {
+                    myDropzone.destroy();
+                }
+                myDropzone = new Dropzone(dz[0], {
+                    url: "/photoUpload",
+                    maxFilesize: 10, // mb
+                    paramName: "file",
+                    method: "post",
+                    clickable: true,
+                    acceptedFiles: 'image/*',
+                    addRemoveLinks: true,
+                    dictRemoveFile: "X",
+                    dictCancelUpload: "X",
+                    createImageThumbnails: false, // large images are memory-heavy
+                    dictDefaultMessage: 'Drop files here or click the white space to upload. To select a featured image, click on it.'
+                });
+
+                myDropzone
+                    .on('sending', function(file) {
+                        // disable submit button until images are done uploaing/processing
+                        $(activeEvent).find('input[type=submit]').prop('disabled', true);
+                    })
+                    .on('complete', function(file) {
+                        var publicUrl = file.xhr.responseText,
+                            imageHtml = '<a href="#" class="deletePhoto">X</a><img src="' + publicUrl + '">';
+
+                        // replace preview with the new image
+                        $(file.previewElement).html(imageHtml);
+
+                        // register delete button event handler
+                        $(file.previewElement).find('a.deletePhoto').click(function(e) {
+                            e.preventDefault();
+
+                            deletePhoto($(this));
+                        });
+
+                        // register 'featured' selection on image click
+                        $(file.previewElement).find('img').click(function(e) {
+                            e.preventDefault();
+                            featurePhoto($(this));
+                        });
+                    })
+                    .on('queuecomplete', function() {
+                        // enable submit button once images are done uploaing/processing
+                        $(activeEvent).find('input[type=submit]').prop('disabled', false);
+
+                        // if no image is selected as featured, select the first image
+                        if (!$(activeEvent).find('.images .featured')[0]) {
+                            featurePhoto($(activeEvent).find('.images img')[0]);
+                        }
+                    });
+
+
+                // allow for photos to be rearranged
+
+                /* 
+                    Form hijacking and data prep
+                */
+                $(activeEvent).find('form').on('submit', function(e) {
+                    e.preventDefault();
+
+                    var photos = [],
+                        formData = $(this).serializeArray();
+
+                    $(this).find('.images').find('img').each(function() {
+                        photos.push($(this).attr('src'));
+                    });
+
+                    formData.push({
+                        name: "photos",
+                        value: JSON.stringify(photos)
+                    });
+                    formData.push({
+                        name: "featuredImage",
+                        value: $(this).find('.featuredImageData').text().trim()
+                    });
+
+                    // console.log(formData);
+
+                    $.ajax({
+                        async: true,
+                        data: formData,
+                        url: '/updateEvent',
+                        dataType: 'json',
+                        method: 'POST',
+                        success: function(data, textStatus, jqXHR) {
+                            console.log('event update response with status ' + textStatus + ' received:');
+                            console.log(data.data);
+
+                            // update form data with received updates
+
+                            closeEdit(activeEvent);
+                        },
+                        error: function(jqXHR, errorType, exception) {
+                            console.log('event update failed with status ' + errorType + ' received:');
+                            console.log(jqXHR);
+                            console.log(exception);
+                        },
+                        complete: function(jqXHR, textStatus) {
+                            console.log('event update ajax event complete');
+                        }
+                    })
                 });
             });
-        $('#fileupload').fileupload({
-                url: url,
-                dataType: 'json',
-                autoUpload: false,
-                acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i,
-                maxFileSize: 999000,
-                // Enable image resizing, except for Android and Opera,
-                // which actually support image resizing, but fail to
-                // send Blob objects via XHR requests:
-                disableImageResize: /Android(?!.*Chrome)|Opera/
-                    .test(window.navigator.userAgent),
-                previewMaxWidth: 100,
-                previewMaxHeight: 100,
-                previewCrop: true
-            }).on('fileuploadadd', function(e, data) {
-                data.context = $('<div/>').appendTo('#files');
-                $.each(data.files, function(index, file) {
-                    var node = $('<p/>')
-                        .append($('<span/>').text(file.name));
-                    if (!index) {
-                        node
-                            .append('<br>')
-                            .append(uploadButton.clone(true).data(data));
-                    }
-                    node.appendTo(data.context);
-                });
-            }).on('fileuploadprocessalways', function(e, data) {
-                var index = data.index,
-                    file = data.files[index],
-                    node = $(data.context.children()[index]);
-                if (file.preview) {
-                    node
-                        .prepend('<br>')
-                        .prepend(file.preview);
+        });
+
+        // delete event button functionality
+        $('a.delete').each(function() {
+            // delete button should delete event after "are you sure" prompt
+            $(this).click(function(e) {
+                e.preventDefault();
+
+                var activeEvent = $(this).parent().parent().parent(),
+                    eventIndex = $(activeEvent).find('input[name=id]').first().val();
+
+                if (window.confirm("Are you sure you want to delete this event?")) {
+                    $.ajax({
+                        url: '/deleteEvent',
+                        method: 'POST',
+                        data: {
+                            id: eventIndex
+                        },
+                        cache: false,
+                        success: function(data, textStatus, jqXHR) {
+                            alert('event successfully deleted');
+                            $(activeEvent).fadeOut();
+                            closeEdit($(activeEvent));
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+                            alert('error while deleting event; see console.log()');
+                            console.log('Error "'+textStatus+'" while deleting event:');
+                            console.log(jqXHR);
+                            console.log(errorThrown);
+                        }
+                    });
                 }
-                if (file.error) {
-                    node
-                        .append('<br>')
-                        .append($('<span class="text-danger"/>').text(file.error));
-                }
-                if (index + 1 === data.files.length) {
-                    data.context.find('button')
-                        .text('Upload')
-                        .prop('disabled', !!data.files.error);
-                }
-            }).on('fileuploadprogressall', function(e, data) {
-                var progress = parseInt(data.loaded / data.total * 100, 10);
-                $('#progress .progress-bar').css(
-                    'width',
-                    progress + '%'
-                );
-            }).on('fileuploaddone', function(e, data) {
-                $.each(data.result.files, function(index, file) {
-                    if (file.url) {
-                        var link = $('<a>')
-                            .attr('target', '_blank')
-                            .prop('href', file.url);
-                        $(data.context.children()[index])
-                            .wrap(link);
-                    } else if (file.error) {
-                        var error = $('<span class="text-danger"/>').text(file.error);
-                        $(data.context.children()[index])
-                            .append('<br>')
-                            .append(error);
-                    }
-                });
-            }).on('fileuploadfail', function(e, data) {
-                $.each(data.files, function(index) {
-                    var error = $('<span class="text-danger"/>').text('File upload failed.');
-                    $(data.context.children()[index])
-                        .append('<br>')
-                        .append(error);
-                });
-            }).prop('disabled', !$.support.fileInput)
-            .parent().addClass($.support.fileInput ? undefined : 'disabled');
+            });
+        });
     });
+
+    function deletePhoto(photoDiv) {
+        var thisParent = $(photoDiv).parent(),
+            imagesDiv = $(thisParent).parent(),
+            featuredData = $(imagesDiv).find('.featuredImageData'),
+            firstPhoto;
+
+        $(photoDiv).parent().remove();
+
+        if ($(thisParent).hasClass('featured')) {
+            // set first image to featured
+            firstPhoto = $(imagesDiv).find('div:not(.featuredImageData)').first();
+
+            $(firstPhoto).addClass('featured');
+            $(featuredData).text($(firstPhoto).find('img').attr('src'));
+        };
+    }
+
+    function featurePhoto(photo) {
+        $(photo).parent().siblings().removeClass('featured');
+        $(photo).parent().addClass('featured');
+        $(photo).parent().parent().find('.featuredImageData').text($(this).attr('src'));
+    }
+
+    function openEdit(eventElement) {
+
+    }
+
+    function closeEdit(eventElement) {
+        $('#lightboxBg').remove();
+        $(eventElement).css({
+            position: 'initial'
+        });
+        $(eventElement).find('form .submit').addClass('hidden');
+
+        // hide delete & cancel buttons, show edit
+        $(eventElement).find('a.delete').addClass('hidden');
+        $(eventElement).find('a.cancel').addClass('hidden');
+        $(eventElement).find('a.edit').removeClass('hidden');
+
+        // swap event title input for h3
+        $(eventElement).find('.eventName h3').removeClass('hidden');
+        $(eventElement).find('.eventName input').addClass('hidden');
+
+        // disable ability to edit inputs
+        $(eventElement).find('input[type=text], textarea').each(function() {
+            this.readOnly = true;
+        });
+
+        // destroy dropzone
+        myDropzone.disable();
+
+        // disable image editing
+        $(eventElement).find('.images img').off('click');
+        $(eventElement).find('.images a').addClass('hidden');
+    }
 
 </script>
 

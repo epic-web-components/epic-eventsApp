@@ -16,8 +16,8 @@
 
 <div class="container">
     <div class="row">
-        <div class="col-sm-12">
-            <form class="form-horizontal well" id="newEventForm" method="post" action="/" ENCTYPE="multipart/form-data">
+        <div class="col-xs-12">
+            <form class="form-horizontal well event" id="newEventForm" method="post" action="/" ENCTYPE="multipart/form-data">
                 <fieldset>
 
                     <!-- Form Name -->
@@ -141,22 +141,24 @@
                     </div>
 
                     <hr>
-                    
+
                     <!-- photos -->
-                    <div class="form-group">
+                    <div class="form-group photos">
                         <label class="col-md-4 control-label" for="photos">Photos</label>
                         <div class="col-md-4">
-                            <div id="dropzone" class="dropzone"></div>
+                            <div id="dropzone" class="dropzone images">
+                            </div>
                             <input type="hidden" value='[]' id="photosArray" name="photosArray">
+                            <input type="hidden" id="featuredImage" name="featuredImage" value="">
                         </div>
                     </div>
-                    
+
                     <hr>
 
                     <!-- submit -->
                     <div class="form-group">
                         <div class="col-md-4 col-md-offset-4">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" value="Create Event">
+                            <input type="submit" class="btn btn-primary btn-lg btn-block" id="submitButton" value="Create Event">
                         </div>
                     </div>
 
@@ -186,29 +188,104 @@
     window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.min.js"><\/script>')
 
     $('.input-group.date').datepicker({});
-    
-    Dropzone.options.dropzone = false;
-    
-    var myDropzone = new Dropzone("#dropzone", {
+
+    // Disable auto discover for all elements:
+    Dropzone.autoDiscover = false;
+
+    var myDropzone = new Dropzone('#dropzone', {
         url: "/photoUpload",
         maxFilesize: 10, // mb
         paramName: "file",
         method: "post",
         clickable: true,
-        acceptedFiles: 'image/*'
+        acceptedFiles: 'image/*',
+        addRemoveLinks: true,
+        dictRemoveFile: "X",
+        dictCancelUpload: "X",
+        createImageThumbnails: false, // large images are memory-heavy
+        dictDefaultMessage: 'Drop files here or click the white space to upload. To select a <u>featured image</u>, click on it.'
     });
-    
-    myDropzone.on('complete', function(file) {
-        /*
-            Push public url(s) of all uploaded files to hidden input field
-        */
-        var publicUrl = file.xhr.responseText,
-            photos = JSON.parse($('#photosArray').val());
-        
-        photos.push(publicUrl);
-        
-        $('#photosArray').val(JSON.stringify(photos));
-    });
+
+    myDropzone
+        .on('complete', function(file) {
+            /*
+                Called each time a photo finishes uploading
+                Push public url(s) of all uploaded files to hidden input field
+            */
+            var publicUrl = file.xhr.responseText,
+                photos = JSON.parse($('#photosArray').val());
+
+            photos.push(publicUrl);
+
+            $('#photosArray').val(JSON.stringify(photos));
+
+            // bind click to featured selection
+            file.previewElement.addEventListener('click', function() {
+                $(this).siblings().removeClass('featured');
+                $(this).addClass('featured');
+                $('#featuredImage').val(publicUrl);
+            });
+        })
+        .on('sending', function(file) {
+            // called just before each file is sent to upload
+
+            // disable form submit until finished uploading
+            document.getElementById('submitButton').disabled = true;
+        })
+        .on('complete', function(file) {
+            var publicUrl = file.xhr.responseText,
+                imageHtml = '<a href="#" class="deletePhoto">X</a><img src="' + publicUrl + '">';
+
+            // replace preview with the new image
+            $(file.previewElement).html(imageHtml);
+
+            // register delete button event handler
+            $(file.previewElement).find('a.deletePhoto').click(function(e) {
+                e.preventDefault();
+
+                deletePhoto($(this));
+            });
+
+            // register 'featured' selection on image click
+            $(file.previewElement).find('img').click(function(e) {
+                e.preventDefault();
+                featurePhoto($(this));
+            });
+        })
+        .on('queuecomplete', function() {
+            // called when all files in queue have finished uploading
+
+            // allow form submit
+            document.getElementById('submitButton').disabled = false;
+
+            // if no image is selected as featured, select the first image
+            if (!$('.images').find('.featured')[0]) {
+                featurePhoto($('.images').find('img').first());
+            }
+        });
+
+    function deletePhoto(photoDiv) {
+        var thisParent = $(photoDiv).parent(),
+            imagesDiv = $(thisParent).parent(),
+            featuredData = $(imagesDiv).find('.featuredImageData'),
+            firstPhoto;
+
+        $(photoDiv).parent().remove();
+
+        if ($(thisParent).hasClass('featured')) {
+            // set first image to featured
+            firstPhoto = $(imagesDiv).find('div:not(.featuredImageData)').first();
+
+            $(firstPhoto).addClass('featured');
+            $(featuredData).text($(firstPhoto).find('img').attr('src'));
+        };
+    }
+
+    function featurePhoto(photo) {
+        $(photo).parent().siblings().removeClass('featured');
+        $(photo).parent().addClass('featured');
+        $(photo).parent().parent().find('.featuredImageData').text($(this).attr('src'));
+    }
 
 </script>
 

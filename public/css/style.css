@@ -1,4 +1,4 @@
-/* line 1, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+/* line 1, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
 .jumbotron {
   background: url("../img/events-hero.jpg") center center no-repeat;
   background-size: cover;
@@ -6,36 +6,166 @@
   color: white;
   padding: 96px 0 0 0; }
 
-/* line 9, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
+/* line 9, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
 .dark-bg {
   background: rgba(0, 0, 0, 0.6); }
 
-/* line 14, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
-.upcomingEventsHeader h1, .upcomingEventsHeader h2 {
-  margin: 0;
-  padding: 6px 0; }
+@keyframes fadeIn {
+  0% {
+    background: transparent; }
+  100% {
+    background: rgba(0, 0, 0, 0.8); } }
 
-/* line 21, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
-.event h3 {
-  margin: 0;
-  padding: 6px 0; }
-
-/* line 26, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
-.event .photos {
-  display: flex;
-  flex-flow: row wrap;
-  align-content: flex-start;
-  align-items: center;
-  justify-content: space-around; }
-  /* line 33, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
-  .event .photos img {
-    flex: 0 1 33%;
-    max-width: 33%; }
-
-/* line 41, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-newEventPage/public/css/style.scss */
-#newEventForm fu-area:not([style-scope]):not(.style-scope) {
-  height: 150px;
+/* line 22, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+#lightboxBg {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  margin: 0 auto; }
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 10;
+  animation: fadeIn 0.5s ease;
+  animation-iteration-count: 1; }
+
+/* line 34, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+.container {
+  position: relative; }
+  /* line 37, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+  .container .upcomingEventsHeader {
+    margin: 1em 0; }
+    /* line 40, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+    .container .upcomingEventsHeader h1, .container .upcomingEventsHeader h2 {
+      margin: 0;
+      padding: 6px 0; }
+  /* line 46, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+  .container .event {
+    z-index: 11; }
+    /* line 49, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+    .container .event .eventName {
+      padding: 0 15px; }
+      /* line 52, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+      .container .event .eventName input[type=text] {
+        padding: 0 0.33em;
+        font-size: 1.5em; }
+      /* line 57, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+      .container .event .eventName h3 {
+        margin: 0 0 6px; }
+    /* line 62, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+    .container .event .edit-delete {
+      padding: 0 15px;
+      text-align: right; }
+    /* line 67, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+    .container .event .form-group {
+      margin: 1em 0; }
+      /* line 71, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+      .container .event .form-group.startEnd input[type=text] {
+        width: auto; }
+      /* line 76, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+      .container .event .form-group input[type=text] {
+        padding: .5em;
+        width: 100%; }
+      /* line 81, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+      .container .event .form-group textarea {
+        width: 100%;
+        padding: .5em;
+        border: 2px solid #eeeeee; }
+      /* line 88, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+      .container .event .form-group.eventType input[type=text] {
+        text-transform: capitalize; }
+      /* line 94, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+      .container .event .form-group.photos .images, .container .event .form-group.photos .dropzone {
+        font-size: 0;
+        display: flex;
+        flex-flow: row wrap;
+        align-content: flex-start;
+        align-items: center;
+        justify-content: flex-start;
+        background: white;
+        padding: 10px;
+        border: 2px solid #eeeeee;
+        position: relative; }
+        /* line 106, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+        .container .event .form-group.photos .images span.featuredMessage, .container .event .form-group.photos .dropzone span.featuredMessage {
+          position: absolute;
+          height: 100%;
+          width: calc(25% + 10px);
+          background: #036;
+          color: white;
+          top: 0;
+          left: 0;
+          font-size: 1.25rem;
+          text-align: center;
+          padding-top: 10px; }
+        /* line 119, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+        .container .event .form-group.photos .images > div, .container .event .form-group.photos .dropzone > div {
+          position: relative;
+          flex: 0 1 20%;
+          max-width: 20%;
+          margin: 2.5%;
+          font-size: 1rem;
+          order: 1; }
+          /* line 127, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+          .container .event .form-group.photos .images > div.dz-preview, .container .event .form-group.photos .dropzone > div.dz-preview {
+            min-height: 0; }
+            /* line 130, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+            .container .event .form-group.photos .images > div.dz-preview .dz-image, .container .event .form-group.photos .dropzone > div.dz-preview .dz-image {
+              width: 100%;
+              height: auto; }
+          /* line 136, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+          .container .event .form-group.photos .images > div.dz-message, .container .event .form-group.photos .dropzone > div.dz-message {
+            flex: 1 1 100%;
+            max-width: 100%;
+            order: -1;
+            padding-left: 25%; }
+          /* line 143, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+          .container .event .form-group.photos .images > div.featured, .container .event .form-group.photos .dropzone > div.featured {
+            border: 5px solid white;
+            max-width: 40%;
+            order: 0; }
+          /* line 149, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+          .container .event .form-group.photos .images > div a, .container .event .form-group.photos .dropzone > div a {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            background: red;
+            color: white;
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 1rem;
+            padding: 5px;
+            line-height: 1rem;
+            text-align: center;
+            box-sizing: border-box; }
+            /* line 165, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+            .container .event .form-group.photos .images > div a:hover, .container .event .form-group.photos .dropzone > div a:hover {
+              text-decoration: none;
+              background: white;
+              color: red;
+              border: 1px solid red;
+              cursor: pointer; }
+          /* line 173, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+          .container .event .form-group.photos .images > div img, .container .event .form-group.photos .dropzone > div img {
+            width: 100%; }
+            /* line 176, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+            .container .event .form-group.photos .images > div img:hover, .container .event .form-group.photos .dropzone > div img:hover {
+              cursor: pointer; }
+        /* line 184, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+        .container .event .form-group.photos .images.dropzone .dz-message u, .container .event .form-group.photos .dropzone.dropzone .dz-message u {
+          background: #036;
+          color: white; }
+        /* line 192, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+        .container .event .form-group.photos .images.dropzone > div img:hover, .container .event .form-group.photos .dropzone.dropzone > div img:hover {
+          cursor: default; }
+  /* line 205, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+  .container #newEventForm .dropzone > div {
+    flex: 1 1 100%;
+    max-width: 100%; }
+  /* line 209, /Users/alex/Dropbox/Client Media/Zeal Optics/epic-eventsApp/public/css/style.scss */
+  .container #newEventForm .dropzone .featured {
+    border-color: #036;
+    border-width: 10px; }
 
 /*# sourceMappingURL=style.css.map */
